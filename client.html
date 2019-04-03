@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>FormInput</title>
+  </head>
+
+  <body>
+    <form onsubmit="return handleclick();">
+      <h2 id="response"></h2>
+      <label for="firstname">First Name</label>
+      <input type="text" name="firstname" id="fnameinp" />
+
+      <label for="lastname">Last Name</label>
+      <input type="text" name="lastname" id="lnameinp" />
+
+      <button type="submit">Lets Rock an Roll!</button>
+    </form>
+  </body>
+  <script>
+    function handleclick() {
+      var fname = document.getElementById("fnameinp").value;
+      var lname = document.getElementById("lnameinp").value;
+      var params = "f=" + fname + "&l=" + lname + "&a=20";
+
+      var http = new XMLHttpRequest();
+      http.open("GET", "http://localhost:8080/?" + params, true);
+
+      http.onload = function() {
+        document.getElementById("response").innerHTML = http.response;
+        return false;
+      };
+      http.setRequestHeader("Access-Control-Allow-Origin", "*");
+      http.setRequestHeader("Access-Control-Allow-Methods", "GET");
+      http.send();
+
+      return false;
+    }
+  </script>
+</html>
